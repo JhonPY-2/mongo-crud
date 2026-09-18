@@ -1,0 +1,12 @@
+Necesito implementar el flujo de "Completar Perfil" para usuarios que se registraron antes de que existiera el campo username en el modelo Usuario. NO toques el registro (/auth/registro) ni el modelo, que ya manejan username correctamente para usuarios nuevos.
+
+En authController.js, en la función de login: cuando el login sea exitoso, incluye en la respuesta JSON un campo perfilCompleto: Boolean(usuario.username) (true si tiene username, false si no), además del token que ya devuelves.
+Crea una nueva ruta protegida PATCH /auth/completar-perfil en routes/auth.js, usando el middleware verificarToken que ya existe en middleware/auth.js. El controller correspondiente (authController.completarPerfil) debe:
+Leer username del body.
+Buscar al usuario por req.usuario.id (el payload que dejó el middleware).
+Actualizar su username y guardar.
+Responder con el usuario actualizado (sin el password).
+En el frontend, crea src/app/completar-perfil/page.js con el diseño que ya está en Figma: fondo navy, logo arriba, tarjeta blanca centrada, título "Completa tu perfil", subtítulo "Necesitamos un dato más para continuar", un input "Usuario", botón dorado "Continuar". Al enviar, hace fetch a PATCH http://localhost:3000/auth/completar-perfil con el header Authorization: Bearer <token> (léelo de localStorage) y el username en el body. Si responde bien, redirige a /. Agrégala a RUTAS_SIN_SIDEBAR en AppShell.js.
+En src/app/login/page.js: después de un login exitoso, revisa la respuesta. Si perfilCompleto es false, redirige a /completar-perfil en vez de /. Si es true, redirige a / como ya hace.
+
+No cambies nada más del diseño existente ni de la lógica de registro.
