@@ -30,15 +30,12 @@ exports.actualizar = async (req, res) => {
             req.params.id,
              req.body, 
              { new: true, runValidators: true }); 
+
+        if (!personajeActualizado) {
+            return res.status(404).json({ message: 'Personaje no encontrado' });
+        }
+
         res.json(personajeActualizado);
-
-            if (!personajeActualizado) {
-                return res.status(404).json({ message: 'Personaje no encontrado' });
-            }
-
-        res.json(personajeActualizado);
-
-
     }
     catch (error) {
         res.status(400).json({ message: error.message });
